@@ -13,7 +13,7 @@ class TypingTrainerWindow(QMainWindow):
         self.mistakes = 0
         self.finish = False
         self.timer = QTimer()
-        self.timer.timeout.connect(self.update_lcd)
+        self.timer.timeout.connect(self.update_inf)
         self.build_user_interface()
         self.show()
 
@@ -104,7 +104,7 @@ class TypingTrainerWindow(QMainWindow):
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
-        self.setCentralWidget(self.centralwidget)  # хз для чего
+        self.setCentralWidget(self.centralwidget)
 
     def start_button_clicked(self):
         self.label_sent.setText(sentence.get_sentence())
@@ -117,9 +117,11 @@ class TypingTrainerWindow(QMainWindow):
         self.speed = 0
         self.set_mistakes_speed_label()
 
-    def update_lcd(self):
+    def update_inf(self):
         self.lcd_value += 1
         self.lcdNumber_time.display(self.lcd_value)
+        self.speed = int(len(self.text) / (self.lcd_value / 60))
+        self.set_mistakes_speed_label()
 
     def set_mistakes_speed_label(self):
         self.label_m.setText(f"Ошибки: {self.mistakes}")
@@ -127,28 +129,25 @@ class TypingTrainerWindow(QMainWindow):
 
     def on_text_changed(self):
         # Получаем текущий текст из TextEdit
-        text = self.textEdit.toPlainText()
+        self.text = self.textEdit.toPlainText()
         # Текст, с которым сравниваем ввод пользователя
         self.target_text = self.label_sent.text()
 
         cursor = self.textEdit.textCursor()
         current_position = cursor.position()
-        if text != self.target_text[:current_position]:
+        if self.text != self.target_text[:current_position]:
             self.textEdit.setStyleSheet("background-color: red;")
             self.mistakes += 1
         else:
             self.textEdit.setStyleSheet("background-color: white;")
 
-        if text == self.target_text:
+        if self.text == self.target_text:
             self.complete()
 
     def complete(self):
         self.timer.stop()
         self.pushButton_start.setText("Start")
         self.label_sent.setText("Congratulations")
-        self.speed = int(len(self.target_text) / (self.lcd_value / 60))
-        print(self.speed)
-        self.set_mistakes_speed_label()
         self.widget.setEnabled(False)
 
 
