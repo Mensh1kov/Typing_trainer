@@ -1,0 +1,26 @@
+{
+  "window_title": "Клавиатурный тренажер",
+  "menubar": {
+    "user": {
+      "title": "Пользователь",
+      "change_user": "Сменить пользователя",
+      "statistics": "Статистика"
+    },
+    "language": {
+      "title": "Язык",
+      "ru": "Русский",
+      "en": "Английский"
+    },
+    "difficulty": {
+      "title": "Сложность",
+      "simple": "Легко",
+      "medium": "Средне",
+      "hard": "Сложно",
+      "legendary": "Легендарно"
+    }
+  },
+  "info_widget": {
+    "speed": "Скорость:",
+    "mistakes": "Ошибки:"
+  }
+}

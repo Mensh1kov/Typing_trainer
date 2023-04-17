@@ -20,8 +20,8 @@ class TypingTrainerWindow(QMainWindow):
     def build_user_interface(self):
         self.setObjectName("MainWindow")
         self.setEnabled(True)
-        self.resize(1200, 800)
-        self.setMinimumSize(QtCore.QSize(1200, 800))
+        self.resize(1000, 600)
+        self.setMinimumSize(QtCore.QSize(1000, 600))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
 
         self.centralwidget = QtWidgets.QWidget(self)
@@ -50,13 +50,13 @@ class TypingTrainerWindow(QMainWindow):
         self.label_speed.setText("Скорость:")
 
         self.widget = QtWidgets.QWidget(self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(100, 150, 1000, 450))
+        self.widget.setGeometry(QtCore.QRect(100, 150, 800, 450))
         self.widget.setObjectName("widget")
         self.widget.setEnabled(False)
 
         self.textEdit = QtWidgets.QTextEdit(self.widget)
         self.textEdit.setEnabled(True)
-        self.textEdit.setGeometry(QtCore.QRect(0, 0, 1000, 200))
+        self.textEdit.setGeometry(QtCore.QRect(0, 0, 800, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.textEdit.setFont(font)
@@ -86,7 +86,7 @@ class TypingTrainerWindow(QMainWindow):
         self.lcdNumber_time.setObjectName("lcdNumber_time")
 
         self.pushButton_start = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_start.setGeometry(QtCore.QRect(500, 660, 200, 50))
+        self.pushButton_start.setGeometry(QtCore.QRect(400, 460, 200, 50))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.pushButton_start.setFont(font)
