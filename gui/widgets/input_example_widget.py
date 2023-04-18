@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QWidget
-
 from sentence import get_sentence
 
 
@@ -22,20 +22,42 @@ class InputExampleWidget:
         self.example.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         self.example.setObjectName("example")
         self.example.setText(get_sentence())
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_inf)
+        self.lcd_value = 0
         self.mistakes = 0
+        self.mistakes_action = None
+        self.speed_action = None
 
     def on_text_changed(self):
-        text = self.input.text()
+        if not self.timer.isActive():
+            self.timer.start(1000)
+        self.text = self.input.text()
         target_text = self.example.text()
         current_position = self.input.cursorPosition()
 
-        if text != target_text[:current_position]:
+        if self.text != target_text[:current_position]:
             self.input.setStyleSheet("background-color: red;")
             self.mistakes += 1
-            print(self.mistakes)
+
+            if self.mistakes_action:
+                self.mistakes_action(self.mistakes)
         else:
             self.input.setStyleSheet("background-color: white;")
 
-        if text == target_text:
+        if self.text == target_text:
+            self.lcd_value = 0
             self.example.setText(get_sentence())
             self.input.setText('')
+            self.timer.stop()
+
+    def update_inf(self):
+        self.lcd_value += 1
+        if self.speed_action:
+            self.speed_action(int(len(self.input.text()) / (self.lcd_value / 60)))
+
+    def set_mistakes_action(self, action):
+        self.mistakes_action = action
+
+    def set_speed_action(self, action):
+        self.speed_action = action

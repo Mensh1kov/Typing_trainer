@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 
 class InfoWidget:
     def __init__(self, widget: QWidget, locale: dict):
+        self.locale = locale
         self.info_widget = QtWidgets.QWidget(widget)
         self.info_widget.setGeometry(QtCore.QRect(50, 30, 700, 51))
         self.info_widget.setObjectName("info_widget")
@@ -20,5 +21,12 @@ class InfoWidget:
         self.set_locale(locale)
 
     def set_locale(self, locale: dict):
+        self.locale = locale
         self.mistakes.setText(locale.get('mistakes'))
         self.speed.setText(locale.get('speed'))
+
+    def set_mistakes(self, mistakes: int):
+        self.mistakes.setText(f'{self.locale.get("mistakes")} {mistakes}')
+
+    def set_speed(self, speed: int):
+        self.speed.setText(f'{self.locale.get("speed")} {speed}')
