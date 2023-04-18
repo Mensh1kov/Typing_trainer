@@ -21,10 +21,3 @@ class MyApp:
         self.info_widget = InfoWidget(self.central_widget, locale.get('info_widget'))
         self.menubar = MenuBar(main_window, locale.get('menubar'))
         main_window.setCentralWidget(self.central_widget)
-
-
-
-
-
-
-

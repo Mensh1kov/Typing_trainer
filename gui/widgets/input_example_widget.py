@@ -1,6 +1,8 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QWidget
 
+from sentence import get_sentence
+
 
 class InputExampleWidget:
     def __init__(self, widget: QWidget):
@@ -19,7 +21,7 @@ class InputExampleWidget:
         self.example.setFont(font)
         self.example.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         self.example.setObjectName("example")
-        self.example.setText('Мама мыла раму')
+        self.example.setText(get_sentence())
         self.mistakes = 0
 
     def on_text_changed(self):
@@ -35,5 +37,5 @@ class InputExampleWidget:
             self.input.setStyleSheet("background-color: white;")
 
         if text == target_text:
-            # self.complete()
-            print('молодец')
+            self.example.setText(get_sentence())
+            self.input.setText('')
