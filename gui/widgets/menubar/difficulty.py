@@ -18,6 +18,7 @@ class Difficulty:
         self.difficulty.addAction(self.medium)
         self.difficulty.addAction(self.hard)
         self.difficulty.addAction(self.legendary)
+        self.set_locale(locale)
         menubar.addAction(self.difficulty.menuAction())
 
     def set_locale(self, locale: dict):
@@ -26,5 +27,3 @@ class Difficulty:
         self.medium.setText(locale.get('medium'))
         self.hard.setText(locale.get('hard'))
         self.legendary.setText(locale.get('legendary'))
-
-

@@ -20,7 +20,7 @@
     }
   },
   "info_widget": {
-    "speed": "Скорость:",
-    "mistakes": "Ошибки:"
+    "speed": "Скорость",
+    "mistakes": "Ошибки"
   }
 }
