@@ -1,15 +1,12 @@
 from resource_loaders import Level, load_sentence_by_lvl, load_locale
 
-RU = 'ru'
-EN = 'en'
-
 
 class AppModel:
     def __init__(self):
         self.mistakes = 0
+        self.lvl = Level.SIMPLE
         self.target_text = self.get_example_text()
         self.is_complete = False
-        self.lvl = Level.SIMPLE
 
     def calculate_speed(self, input_text: str, time: int) -> int:
         return int(len(input_text) / (time / 60)) if time else 0

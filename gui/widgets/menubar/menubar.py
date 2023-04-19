@@ -10,9 +10,11 @@ class MenuBar:
         self.menubar = QtWidgets.QMenuBar(window)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
         self.menubar.setObjectName("menubar")
-        self.user = User(self.menubar, locale)
-        self.language = Language(self.menubar, locale)
-        self.difficulty = Difficulty(self.menubar, locale)
+
+        self.user = User(self.menubar, locale.get('user'))
+        self.language = Language(self.menubar, locale.get('language'))
+        self.difficulty = Difficulty(self.menubar, locale.get('difficulty'))
+
         self.set_locale(locale)
         window.setMenuBar(self.menubar)
 

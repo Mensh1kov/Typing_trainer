@@ -48,7 +48,7 @@ class Ui_MainWindow(object):
         self.user = QtWidgets.QMenu(self.menubar)
         self.user.setObjectName("user")
         self.language = QtWidgets.QMenu(self.menubar)
-        self.language.setObjectName("language")
+        self.language.setObjectName("menu")
         self.difficulty = QtWidgets.QMenu(self.menubar)
         self.difficulty.setObjectName("difficulty")
         MainWindow.setMenuBar(self.menubar)

@@ -3,9 +3,9 @@ from functools import partial
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QAction
 
-from app_model import AppModel
+from app.app_model import AppModel
 from app.app_view import AppView
-from sentence import Level
+from resource_loaders import Level
 
 
 class AppController:
