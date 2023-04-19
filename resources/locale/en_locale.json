@@ -22,5 +22,9 @@
   "info_widget": {
     "speed": "Скорость",
     "mistakes": "Ошибки"
+    },
+  "user_dialog": {
+    "title": "Сменить пользователя",
+    "description": "Введите имя пользователя"
   }
 }

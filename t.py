@@ -12,13 +12,14 @@ class Ui_MainWindow(object):
         self.main_widget.setObjectName("main_widget")
         self.input_and_example_widget = QtWidgets.QWidget(self.main_widget)
         self.input_and_example_widget.setGeometry(QtCore.QRect(50, 100, 700, 150))
-        self.input_and_example_widget.setObjectName("input_and_example_widget")
+        self.input_and_example_widget.setObjectName("input_example_widget")
         self.input = QtWidgets.QLineEdit(self.input_and_example_widget)
         self.input.setGeometry(QtCore.QRect(0, 0, 700, 30))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.input.setFont(font)
         self.input.setObjectName("input")
+        self.input.textChanged.connect(self.f)
         self.example = QtWidgets.QLabel(self.input_and_example_widget)
         self.example.setGeometry(QtCore.QRect(3, 35, 694, 60))
         font = QtGui.QFont()
@@ -85,7 +86,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
+    def f(self):
+        print(1223)
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))

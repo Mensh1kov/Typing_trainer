@@ -17,8 +17,6 @@ class AppController:
         self.setup_input_example_widget()
         self.setup_menubar()
 
-        self.selected_language_action = self.view.menubar.language.Russian
-
     def setup_timer(self):
         self.time = 0
         self.timer = QTimer()
@@ -33,6 +31,12 @@ class AppController:
     def setup_menubar(self):
         self.setup_difficulty_menu()
         self.setup_language_menu()
+        self.setup_user_menu()
+
+    def setup_user_menu(self):
+        user = self.view.menubar.user
+        user.change_user.triggered.connect(self.change_user)
+        # user.statistics.triggered.connect()
 
     def setup_language_menu(self):
         language = self.view.menubar.language
@@ -49,7 +53,6 @@ class AppController:
             self.model.locale
         )
         self.set_action_checked(self.selected_language_action, True)
-
 
     def setup_difficulty_menu(self):
         difficulty = self.view.menubar.difficulty
@@ -74,7 +77,6 @@ class AppController:
         self.selected_language_action = new
         self.set_locale(locale)
         self.switch_action(old, new)
-
 
     def on_level_changed(self, lvl: Level):
         new = self.difficulty_map.get(lvl)
@@ -110,6 +112,9 @@ class AppController:
 
         if self.model.is_complete:
             self.complete()
+
+    def change_user(self):
+        print(self.view.user_dialog.get_text())
 
     def is_correct_input(self, input_text: str) -> bool:
         return self.model.process_input(input_text)
