@@ -4,7 +4,7 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QAction
 
 from app_model import AppModel
-from gui.app_view import AppView
+from app.app_view import AppView
 from sentence import Level
 
 

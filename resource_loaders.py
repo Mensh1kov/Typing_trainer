@@ -11,13 +11,13 @@ class Level(Enum):
 
 
 def load_sentence():
-    with open('resources/texts/database.json', encoding='utf-8') as f:
+    with open('resources/text/database.json', encoding='utf-8') as f:
         data = json.load(f)
     return random.choice(data)
 
 
 def load_sentence_by_lvl(lvl: Level):
-    with open('resources/texts/levels.json', encoding='utf-8') as f:
+    with open('resources/text/levels.json', encoding='utf-8') as f:
         data = json.load(f)
     return random.choice(data.get(lvl.value))
 
