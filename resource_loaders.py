@@ -10,6 +10,11 @@ class Level(Enum):
     LEGENDARY = 'legendary'
 
 
+class Locale(Enum):
+    RU = 'ru'
+    EN = 'en'
+
+
 def load_sentence():
     with open('resources/text/database.json', encoding='utf-8') as f:
         data = json.load(f)
@@ -22,6 +27,6 @@ def load_sentence_by_lvl(lvl: Level):
     return random.choice(data.get(lvl.value))
 
 
-def load_locale(locale: str) -> dict:
-    with open(f'resources/locale/{locale}_locale.json', encoding='utf-8') as f:
+def load_locale(locale: Locale) -> dict:
+    with open(f'resources/locale/{locale.value}_locale.json', encoding='utf-8') as f:
         return json.load(f)

@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QAction
 
 from app.app_model import AppModel
 from app.app_view import AppView
-from resource_loaders import Level
+from resource_loaders import Level, Locale
 
 
 class AppController:
@@ -32,6 +32,24 @@ class AppController:
 
     def setup_menubar(self):
         self.setup_difficulty_menu()
+        self.setup_language_menu()
+
+    def setup_language_menu(self):
+        language = self.view.menubar.language
+
+        self.language_map = {
+            Locale.RU: language.Russian,
+            Locale.EN: language.English
+        }
+
+        for locale, action in self.language_map.items():
+            action.triggered.connect(partial(self.on_locale_changed, locale))
+
+        self.selected_language_action = self.language_map.get(
+            self.model.locale
+        )
+        self.set_action_checked(self.selected_language_action, True)
+
 
     def setup_difficulty_menu(self):
         difficulty = self.view.menubar.difficulty
@@ -50,6 +68,14 @@ class AppController:
             self.model.lvl)
         self.set_action_checked(self.selected_difficulty_action, True)
 
+    def on_locale_changed(self, locale: Locale):
+        new = self.language_map.get(locale)
+        old = self.selected_language_action
+        self.selected_language_action = new
+        self.set_locale(locale)
+        self.switch_action(old, new)
+
+
     def on_level_changed(self, lvl: Level):
         new = self.difficulty_map.get(lvl)
         old = self.selected_difficulty_action
@@ -64,6 +90,9 @@ class AppController:
 
     def set_action_checked(self, action: QAction, checked: bool):
         action.setChecked(checked)
+
+    def set_locale(self, locale: Locale):
+        self.view.set_locale(self.model.get_locale(locale))
 
     def set_level(self, lvl: Level):
         self.model.set_level(lvl)

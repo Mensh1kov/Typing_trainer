@@ -1,4 +1,4 @@
-from resource_loaders import Level, load_sentence_by_lvl, load_locale
+from resource_loaders import Level, load_sentence_by_lvl, load_locale, Locale
 
 
 class AppModel:
@@ -7,6 +7,7 @@ class AppModel:
         self.lvl = Level.SIMPLE
         self.target_text = self.get_example_text()
         self.is_complete = False
+        self.locale = Locale.RU
 
     def calculate_speed(self, input_text: str, time: int) -> int:
         return int(len(input_text) / (time / 60)) if time else 0
@@ -27,7 +28,7 @@ class AppModel:
         self.target_text = load_sentence_by_lvl(self.lvl)
         return self.target_text
 
-    def get_locale(self, locale: str):
+    def get_locale(self, locale: Locale):
         return load_locale(locale)
 
     def set_level(self, lvl: Level):
