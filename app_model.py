@@ -9,7 +9,7 @@ class AppModel:
         self.lvl = Levels.SIMPLE
 
     def calculate_speed(self, input_text: str, time: int) -> int:
-        return int(len(input_text) / (time / 600)) if time else 0
+        return int(len(input_text) / (time / 60)) if time else 0
 
     def process_input(self, input_text: str) -> bool:
         if input_text == self.target_text:
