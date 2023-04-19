@@ -3,22 +3,25 @@ import random
 from enum import Enum
 
 
-class Levels(Enum):
+class Level(Enum):
     SIMPLE = 'simple'
     MEDIUM = 'medium'
     HARD = 'hard'
     LEGENDARY = 'legendary'
 
 
-def get_sentence():
+def load_sentence():
     with open('resources/texts/database.json', encoding='utf-8') as f:
         data = json.load(f)
-
     return random.choice(data)
 
 
-def get_sentence_by_lvl(lvl: Levels):
+def load_sentence_by_lvl(lvl: Level):
     with open('resources/texts/levels.json', encoding='utf-8') as f:
         data = json.load(f)
-
     return random.choice(data.get(lvl.value))
+
+
+def load_locale(locale: str) -> dict:
+    with open(f'resources/locale/{locale}_locale.json', encoding='utf-8') as f:
+        return json.load(f)

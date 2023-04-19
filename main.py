@@ -1,8 +1,9 @@
 from PyQt5 import QtWidgets
-from app_controller import AppController
-from app_model import AppModel
+from app.app_controller import AppController
+from app.app_model import AppModel
 from gui.app_view import AppView
-from localizator import load_locale
+
+RU = 'ru'
 
 
 def main():
@@ -10,8 +11,8 @@ def main():
     app = QtWidgets.QApplication(sys.argv)
     main_window = QtWidgets.QMainWindow()
 
-    view = AppView(main_window, load_locale('ru'))
     model = AppModel()
+    view = AppView(main_window, model.get_locale(RU))
     AppController(model, view)
 
     main_window.show()

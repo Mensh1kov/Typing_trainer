@@ -107,7 +107,7 @@ class TypingTrainerWindow(QMainWindow):
         self.setCentralWidget(self.centralwidget)
 
     def start_button_clicked(self):
-        self.label_sent.setText(sentence.get_sentence())
+        self.label_sent.setText(sentence.load_sentence())
         self.textEdit.setText("")
         self.lcd_value = 0
         self.timer.start(1000)
