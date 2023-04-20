@@ -17,4 +17,5 @@ class InputExampleWidget:
         self.example = QtWidgets.QLabel(self.input_example_widget)
         self.example.setGeometry(QtCore.QRect(3, 35, 694, 60))
         self.example.setFont(font)
+        self.example.setWordWrap(True)
         self.example.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)

@@ -10,6 +10,7 @@ from gui.widgets.user_dialog import UserDialog
 class AppView:
     def __init__(self, main_window: QMainWindow, locale: dict):
         self.main_window = main_window
+        main_window.setWindowTitle(locale.get('window_title'))
         main_window.setFixedSize(800, 600)
 
         self.central_widget = QtWidgets.QWidget(main_window)

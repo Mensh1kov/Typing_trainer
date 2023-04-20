@@ -5,9 +5,9 @@ class AppModel:
     def __init__(self):
         self.mistakes = 0
         self.lvl = Level.SIMPLE
-        self.target_text = self.get_example_text()
         self.is_complete = False
         self.locale = Locale.RU
+        self.target_text = self.get_example_text()
 
     def calculate_speed(self, input_text: str, time: int) -> int:
         return int(len(input_text) / (time / 60)) if time else 0
@@ -25,11 +25,15 @@ class AppModel:
         return True
 
     def get_example_text(self):
-        self.target_text = load_sentence_by_lvl(self.lvl)
+        self.target_text = load_sentence_by_lvl(self.lvl, self.locale)
         return self.target_text
 
     def get_locale(self, locale: Locale):
+        self.set_locale(locale)
         return load_locale(locale)
+
+    def set_locale(self, locale: Locale):
+        self.locale = locale
 
     def set_level(self, lvl: Level):
         self.lvl = lvl

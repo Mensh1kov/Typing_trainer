@@ -76,6 +76,7 @@ class AppController:
         self.selected_language_action = new
         self.set_locale(locale)
         self.switch_action(old, new)
+        self.complete()
 
     def on_level_changed(self, lvl: Level):
         new = self.difficulty_map.get(lvl)
@@ -122,10 +123,14 @@ class AppController:
         return self.model.process_input(input_text)
 
     def complete(self):
-        self.view.input_example_widget.example.setText(self.model.get_example_text())
+        self.set_new_example()
         self.clear_input()
         self.reset_time()
         self.stop_timer()
+
+    def set_new_example(self):
+        self.view.input_example_widget.example.setText(
+            self.model.get_example_text())
 
     def clear_input(self):
         self.view.input_example_widget.input.setText("")
