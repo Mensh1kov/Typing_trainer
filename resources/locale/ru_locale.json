@@ -26,5 +26,11 @@
   "user_dialog": {
     "title": "Сменить пользователя",
     "description": "Введите имя пользователя"
+  },
+  "stat_dialog": {
+    "stat": "Статистика",
+    "number_typed_texts": "Количество набранных текстов",
+    "speed": "Скорость",
+    "number_mistakes": "Количество ошибок"
   }
 }

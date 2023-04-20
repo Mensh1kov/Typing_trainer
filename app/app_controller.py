@@ -36,7 +36,7 @@ class AppController:
     def setup_user_menu(self):
         user = self.view.menubar.user
         user.change_user.triggered.connect(self.change_user)
-        # user.statistics.triggered.connect()
+        user.statistics.triggered.connect(self.show_stat)
 
     def setup_language_menu(self):
         language = self.view.menubar.language
@@ -115,6 +115,9 @@ class AppController:
 
     def change_user(self):
         print(self.view.user_dialog.get_text())
+
+    def show_stat(self):
+        self.view.stat_dialog.show_stat({})
 
     def is_correct_input(self, input_text: str) -> bool:
         return self.model.process_input(input_text)
