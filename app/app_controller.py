@@ -2,10 +2,9 @@ from functools import partial
 
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QAction
-
 from app.app_model import AppModel
 from app.app_view import AppView
-from resource_loaders import Level, Locale
+from resource_handler import Locale, Level
 
 
 class AppController:

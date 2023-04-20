@@ -1,4 +1,4 @@
-from resource_loaders import Level, load_sentence_by_lvl, load_locale, Locale
+from resource_handler import Level, Locale, load_sentence_by_lvl, load_locale
 
 
 class AppModel:
@@ -33,4 +33,3 @@ class AppModel:
 
     def set_level(self, lvl: Level):
         self.lvl = lvl
-
