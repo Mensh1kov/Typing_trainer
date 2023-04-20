@@ -26,7 +26,7 @@ def load_sentence():
 
 
 def load_sentence_by_lvl(lvl: Level) -> str:
-    data = load_data('resources/texts/levels.json')
+    data = load_data('resources/texts/ru_levels.json')
     return random.choice(data.get(lvl.value))
 
 

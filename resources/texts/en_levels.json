@@ -1,0 +1,54 @@
+{
+  "simple":
+  [
+    "Beautiful flowers grow in our garden.",
+    "I love walking in the park in autumn.",
+    "My mom cooks very tasty food.",
+    "I have a big and friendly family.",
+    "We often go to the movies with friends.",
+    "In winter, I love skiing.",
+    "My brother plays the guitar very well.",
+    "Our dog has a lot of toys.",
+    "I do sports every day.",
+    "In summer, we go to the sea with the whole family."
+  ],
+  "medium":
+  [
+    "I love traveling and discovering new places.",
+    "Today was quite chilly outside.",
+    "I enjoy communicating with interesting people.",
+    "I can't live without my smartphone.",
+    "I adore walking in the park on weekends.",
+    "I always strive for self-improvement.",
+    "I believe that honesty and integrity are very important in life.",
+    "I love watching documentaries and reading popular science literature.",
+    "I practice yoga to maintain physical and emotional harmony.",
+    "I believe that everything happens for a reason and that every person has a mission in life."
+  ],
+  "hard":
+  [
+    "By combining our efforts, we were able to achieve incredible results in our project.",
+    "Despite the fact that she made a big mistake, I decided to forgive her and not hold any grudges.",
+    "There are so many opportunities and choices in our lives that sometimes it can lead to uncertainty and fear of making the wrong decision.",
+    "I understand that everything that happens to me is the result of my thoughts, words, and actions, and that I can change my life by changing my inner reality.",
+    "I feel that my inner voice is telling me to go in this direction, although my mind tells me it's impossible.",
+    "I notice that many people live according to a pattern, based on what they are told and what is expected of them by others, instead of seeking their own path and living according to their own beliefs and values.",
+    "I realize that personal growth and development require us to step out of our comfort zone and become aware of our weaknesses, but this can be very difficult and painful.",
+    "I believe that everyone has their own unique life story, and that we can draw lessons and inspiration from the experience of others.",
+    "I am aware that there is a lot of injustice and inefficiency in the systems of governance and resource distribution in our world, and that we need to strive for creating a more just and sustainable society.",
+    "I am convinced that our ability to empathize and show compassion is one of the key qualities that helps us become better people and improve our world."
+  ],
+  "legendary":
+  [
+    "An eclectic philanthropist and ambivert, he dreamed of freedom and emancipation, which found reflection in his art and lifestyle.",
+    "The coronation ceremony took place in the sculpture hall, where statues of gods and heroes looked down on the attendees.",
+    "She was an enchanting fatalist who knew how to create mystery and mystique around herself.",
+    "Archaic symbols and deities intertwine with modern aesthetics in his works, creating a unique world and perspective on contemporary art.",
+    "Mystical grotesques and macabre realism were characteristic features of his early work, which later evolved into more abstract forms.",
+    "In his books, one can find sophisticated lexical constructions and unusual sentence structures that evoke admiration and amazement among readers.",
+    "His philosophical musings on contradictions and dichotomies in the world were imbued with the spirit of uncompromising justice and profound wisdom.",
+    "The paintings of this artist are permeated with symbolic motifs and allegories that reveal the deep layers of human psychology and culture.",
+    "His musical compositions were written in complex musical forms and harmonic schemes that emphasized the depth and complexity of his musical thinking.",
+    "He was an unwavering authority in the field of astronomy and cosmology, whose discoveries and theories continue to influence modern science and technology."
+  ]
+}

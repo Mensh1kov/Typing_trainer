@@ -2,35 +2,35 @@
   "window_title": "Typing trainer",
   "menubar": {
     "user": {
-      "title": "Пользователь",
-      "change_user": "Сменить пользователя",
-      "statistics": "Статистика"
+      "title": "User",
+      "change_user": "Change User",
+      "statistics": "Statistics"
     },
     "language": {
-      "title": "Язык",
-      "ru": "Русский",
-      "en": "Английский"
+      "title": "Language",
+      "ru": "Russian",
+      "en": "English"
     },
     "difficulty": {
-      "title": "Сложность",
-      "simple": "Легко",
-      "medium": "Средне",
-      "hard": "Сложно",
-      "legendary": "Легендарно"
+      "title": "Complexity",
+      "simple": "Easy",
+      "medium": "Medium",
+      "hard": "Difficult",
+      "legendary": "Legendary"
     }
   },
   "info_widget": {
-    "speed": "Скорость",
-    "mistakes": "Ошибки"
+    "speed": "Speed",
+    "mistakes": "Mistakes"
     },
   "user_dialog": {
-    "title": "Сменить пользователя",
-    "description": "Введите имя пользователя"
+    "title": "Change User",
+    "description": "Enter the user name"
   },
   "stat_dialog": {
-    "stat": "Статистика",
-    "number_typed_texts": "Количество набранных текстов",
-    "speed": "Скорость",
-    "number_mistakes": "Количество ошибок"
+    "stat": "Statistics",
+    "number_typed_texts": "Number of typed texts",
+    "speed": "Speed",
+    "number_mistakes": "Number of errors"
   }
 }
