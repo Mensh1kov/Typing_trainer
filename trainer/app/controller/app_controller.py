@@ -1,3 +1,4 @@
+import sys
 from functools import partial
 
 from PyQt5.QtCore import QTimer, QEvent
@@ -14,6 +15,7 @@ class AppController:
 
         self.setup_view()
         self.setup_timer()
+        self.authorization()
 
     def close_event(self, event: QEvent):
         self.model.save_user()
@@ -45,7 +47,7 @@ class AppController:
 
     def setup_user_menu(self):
         user = self.view.menubar.user
-        user.change_user.triggered.connect(self.change_user)
+        user.change_user.triggered.connect(self.change_user_dialog)
         user.statistics.triggered.connect(self.show_stat)
 
     def setup_language_menu(self):
@@ -124,10 +126,24 @@ class AppController:
         if self.model.is_complete:
             self.complete()
 
-    def change_user(self):
-        name, ok = self.view.user_dialog.get_text()
+    def authorization(self):
+        while not self.model.user:
+            name, ok = self.get_user_input_dialog()
+            if ok:
+                self.change_user(name)
+            else:
+                sys.exit()
+
+    def change_user_dialog(self):
+        name, ok = self.get_user_input_dialog()
         if ok:
-            self.model.change_user(name)
+            self.change_user(name)
+
+    def change_user(self, name: str):
+        self.model.change_user(name)
+
+    def get_user_input_dialog(self) -> (str, bool):
+        return self.view.user_dialog.get_text()
 
     def show_stat(self):
         user = self.model.user
