@@ -1,4 +1,4 @@
-from resource_handler import Level, Locale, load_sentence_by_lvl, load_locale
+from trainer.app.model.utils.resource_handler import Level, Locale, load_sentence_by_lvl, load_locale
 
 
 class AppModel:
