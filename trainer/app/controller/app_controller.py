@@ -1,6 +1,6 @@
 from functools import partial
 
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, QEvent
 from PyQt5.QtWidgets import QAction
 from trainer.app.model.app_model import AppModel
 from trainer.app.view.app_view import AppView
@@ -12,7 +12,15 @@ class AppController:
         self.model = model
         self.view = view
 
+        self.setup_view()
         self.setup_timer()
+
+    def close_event(self, event: QEvent):
+        self.model.save_user()
+        event.accept()
+
+    def setup_view(self):
+        self.setup_window()
         self.setup_input_example_widget()
         self.setup_menubar()
 
@@ -20,6 +28,9 @@ class AppController:
         self.time = 0
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_speed)
+
+    def setup_window(self):
+        self.view.main_window.closeEvent = self.close_event
 
     def setup_input_example_widget(self):
         self.view.input_example_widget.example.setText(
@@ -114,10 +125,14 @@ class AppController:
             self.complete()
 
     def change_user(self):
-        print(self.view.user_dialog.get_text())
+        name, ok = self.view.user_dialog.get_text()
+        if ok:
+            self.model.change_user(name)
 
     def show_stat(self):
-        self.view.stat_dialog.show_stat({})
+        user = self.model.user
+        if user:
+            self.view.stat_dialog.show_stat(user)
 
     def is_correct_input(self, input_text: str) -> bool:
         return self.model.process_input(input_text)
