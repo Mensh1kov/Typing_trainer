@@ -21,7 +21,7 @@ def load_data(path: str) -> dict:
 
 
 def load_sentence():
-    data = load_data('resources/texts/database.json')
+    data = load_data('trainer/resources/texts/database.json')
     return random.choice(data)
 
 
@@ -32,9 +32,4 @@ def load_sentence_by_lvl(lvl: Level, locale: Locale) -> str:
 
 
 def load_locale(locale: Locale) -> dict:
-    return load_data(f'resources/locale/{locale.value}_locale.json')
-
-
-def load_user(user: str):
-    data = load_data('resources/users.json')
-    return data.get(user)
+    return load_data(f'trainer/resources/locale/{locale.value}_locale.json')
