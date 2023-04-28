@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
-from app.app_controller import AppController
-from app.app_model import AppModel
-from app.app_view import AppView
+from trainer.app.controller.app_controller import AppController
+from trainer.app.model.app_model import AppModel
+from trainer.app.view.app_view import AppView
 
 RU = 'ru'
 

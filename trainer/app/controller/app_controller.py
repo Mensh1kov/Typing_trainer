@@ -1,10 +1,11 @@
+import sys
 from functools import partial
 
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, QEvent
 from PyQt5.QtWidgets import QAction
-from app.app_model import AppModel
-from app.app_view import AppView
-from resource_handler import Locale, Level
+from trainer.app.model.app_model import AppModel
+from trainer.app.view.app_view import AppView
+from trainer.app.model.utils.resource_handler import Locale, Level
 
 
 class AppController:
@@ -12,7 +13,16 @@ class AppController:
         self.model = model
         self.view = view
 
+        self.setup_view()
         self.setup_timer()
+        self.authorization()
+
+    def close_event(self, event: QEvent):
+        self.model.save_user()
+        event.accept()
+
+    def setup_view(self):
+        self.setup_window()
         self.setup_input_example_widget()
         self.setup_menubar()
 
@@ -20,6 +30,9 @@ class AppController:
         self.time = 0
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_speed)
+
+    def setup_window(self):
+        self.view.main_window.closeEvent = self.close_event
 
     def setup_input_example_widget(self):
         self.view.input_example_widget.example.setText(
@@ -34,7 +47,7 @@ class AppController:
 
     def setup_user_menu(self):
         user = self.view.menubar.user
-        user.change_user.triggered.connect(self.change_user)
+        user.change_user.triggered.connect(self.change_user_dialog)
         user.statistics.triggered.connect(self.show_stat)
 
     def setup_language_menu(self):
@@ -76,6 +89,7 @@ class AppController:
         self.selected_language_action = new
         self.set_locale(locale)
         self.switch_action(old, new)
+        self.complete()
 
     def on_level_changed(self, lvl: Level):
         new = self.difficulty_map.get(lvl)
@@ -112,20 +126,42 @@ class AppController:
         if self.model.is_complete:
             self.complete()
 
-    def change_user(self):
-        print(self.view.user_dialog.get_text())
+    def authorization(self):
+        while not self.model.user:
+            name, ok = self.get_user_input_dialog()
+            if ok:
+                self.change_user(name)
+            else:
+                sys.exit()
+
+    def change_user_dialog(self):
+        name, ok = self.get_user_input_dialog()
+        if ok:
+            self.change_user(name)
+
+    def change_user(self, name: str):
+        self.model.change_user(name)
+
+    def get_user_input_dialog(self) -> (str, bool):
+        return self.view.user_dialog.get_text()
 
     def show_stat(self):
-        self.view.stat_dialog.show_stat({})
+        user = self.model.user
+        if user:
+            self.view.stat_dialog.show_stat(user)
 
     def is_correct_input(self, input_text: str) -> bool:
         return self.model.process_input(input_text)
 
     def complete(self):
-        self.view.input_example_widget.example.setText(self.model.get_example_text())
+        self.set_new_example()
         self.clear_input()
         self.reset_time()
         self.stop_timer()
+
+    def set_new_example(self):
+        self.view.input_example_widget.example.setText(
+            self.model.get_example_text())
 
     def clear_input(self):
         self.view.input_example_widget.input.setText("")

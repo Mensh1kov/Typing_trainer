@@ -1,0 +1,36 @@
+{
+  "window_title": "Typing trainer",
+  "menubar": {
+    "user": {
+      "title": "User",
+      "change_user": "Change User",
+      "statistics": "Statistics"
+    },
+    "language": {
+      "title": "Language",
+      "ru": "Russian",
+      "en": "English"
+    },
+    "difficulty": {
+      "title": "Complexity",
+      "simple": "Easy",
+      "medium": "Medium",
+      "hard": "Difficult",
+      "legendary": "Legendary"
+    }
+  },
+  "info_widget": {
+    "speed": "Speed",
+    "mistakes": "Mistakes"
+    },
+  "user_dialog": {
+    "title": "Change User",
+    "description": "Enter the user name"
+  },
+  "stat_dialog": {
+    "stat": "Statistics",
+    "number_typed_texts": "Number of typed texts",
+    "speed": "Speed",
+    "number_mistakes": "Number of errors"
+  }
+}

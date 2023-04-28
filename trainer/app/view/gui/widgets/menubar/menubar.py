@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QMainWindow
-from gui.widgets.menubar.difficulty import Difficulty
-from gui.widgets.menubar.language import Language
-from gui.widgets.menubar.user import User
+from trainer.app.view.gui.widgets.menubar.difficulty import Difficulty
+from trainer.app.view.gui.widgets.menubar.language import Language
+from trainer.app.view.gui.widgets.menubar.user import User
 
 
 class MenuBar:

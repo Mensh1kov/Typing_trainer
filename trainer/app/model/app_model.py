@@ -1,13 +1,16 @@
-from resource_handler import Level, Locale, load_sentence_by_lvl, load_locale
+from trainer.app.model.utils.data_handler import load_user_by_name, save_user
+from trainer.app.model.utils.resource_handler import Level, Locale, load_sentence_by_lvl, load_locale
 
 
 class AppModel:
     def __init__(self):
         self.mistakes = 0
         self.lvl = Level.SIMPLE
-        self.target_text = self.get_example_text()
         self.is_complete = False
         self.locale = Locale.RU
+        self.target_text = self.get_example_text()
+        self.user = None
+        self.speeds = []
 
     def calculate_speed(self, input_text: str, time: int) -> int:
         return int(len(input_text) / (time / 60)) if time else 0
@@ -25,11 +28,24 @@ class AppModel:
         return True
 
     def get_example_text(self):
-        self.target_text = load_sentence_by_lvl(self.lvl)
+        self.target_text = load_sentence_by_lvl(self.lvl, self.locale)
         return self.target_text
 
     def get_locale(self, locale: Locale):
+        self.set_locale(locale)
         return load_locale(locale)
+
+    def set_locale(self, locale: Locale):
+        self.locale = locale
 
     def set_level(self, lvl: Level):
         self.lvl = lvl
+
+    def save_user(self):
+        if self.user:
+            save_user(self.user)
+
+    def change_user(self, name: str):
+        self.save_user()
+        if name:
+            self.user = load_user_by_name(name)

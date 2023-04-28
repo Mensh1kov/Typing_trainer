@@ -1,15 +1,16 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMainWindow
-from gui.widgets.info_widget import InfoWidget
-from gui.widgets.input_example_widget import InputExampleWidget
-from gui.widgets.menubar.menubar import MenuBar
-from gui.widgets.stat_dialog import StatDialog
-from gui.widgets.user_dialog import UserDialog
+from trainer.app.view.gui.widgets.info_widget import InfoWidget
+from trainer.app.view.gui.widgets.input_example_widget import InputExampleWidget
+from trainer.app.view.gui.widgets.menubar.menubar import MenuBar
+from trainer.app.view.gui.widgets.stat_dialog import StatDialog
+from trainer.app.view.gui.widgets.user_dialog import UserDialog
 
 
 class AppView:
     def __init__(self, main_window: QMainWindow, locale: dict):
         self.main_window = main_window
+        main_window.setWindowTitle(locale.get('window_title'))
         main_window.setFixedSize(800, 600)
 
         self.central_widget = QtWidgets.QWidget(main_window)
