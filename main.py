@@ -12,7 +12,7 @@ def main():
     main_window = QtWidgets.QMainWindow()
 
     model = AppModel()
-    view = AppView(main_window, model.get_locale(model.locale))
+    view = AppView(main_window, model.load_locale(model.locale))
     AppController(model, view)
 
     main_window.show()

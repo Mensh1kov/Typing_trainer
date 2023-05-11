@@ -131,7 +131,7 @@ class AppController:
         action.setChecked(checked)
 
     def set_locale(self, locale: Locale):
-        self.view.set_locale(self.model.get_locale(locale))
+        self.view.set_locale(self.model.load_locale(locale))
 
     def set_level(self, lvl: Level):
         self.model.set_level(lvl)
@@ -140,9 +140,8 @@ class AppController:
         self.model.set_mode(mode)
 
     def on_text_changed(self):
-        if not self.timer.isActive():
-            self.timer.start(1000)
-
+        if not self.model.is_started:
+            self.model.start()
         input_ = self.view.input_example_widget.input
         if self.is_correct_input(input_.text()):
             input_.setStyleSheet("background-color: white;")
@@ -152,9 +151,10 @@ class AppController:
 
         if self.model.is_complete:
             self.complete()
+        self.update_speed()
 
     def authorization(self):
-        while not self.model.user:
+        while not self.model.is_authorization():
             name, ok = self.get_user_input_dialog()
             if ok:
                 self.change_user(name)
@@ -173,7 +173,7 @@ class AppController:
         return self.view.user_dialog.get_text()
 
     def show_stat(self):
-        user = self.model.user
+        user = self.model.get_user()
         if user:
             self.view.stat_dialog.show_stat(user)
 
@@ -200,7 +200,4 @@ class AppController:
         self.timer.stop()
 
     def update_speed(self):
-        self.time += 1
-        text = self.view.input_example_widget.input.text()
-        speed = self.model.calculate_speed(text, self.time)
-        self.view.info_widget.set_speed(speed)
+        self.view.info_widget.set_speed(self.model.get_speed())
