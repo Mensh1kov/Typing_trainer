@@ -5,7 +5,7 @@ from PyQt5.QtCore import QTimer, QEvent
 from PyQt5.QtWidgets import QAction
 from trainer.app.model.app_model import AppModel
 from trainer.app.view.app_view import AppView
-from trainer.app.model.utils.resource_handler import Locale, Level
+from trainer.app.model.utils.resource_handler import Locale, Level, Mode
 
 
 class AppController:
@@ -44,6 +44,7 @@ class AppController:
         self.setup_difficulty_menu()
         self.setup_language_menu()
         self.setup_user_menu()
+        self.setup_mode_menu()
 
     def setup_user_menu(self):
         user = self.view.menubar.user
@@ -83,6 +84,21 @@ class AppController:
             self.model.lvl)
         self.set_action_checked(self.selected_difficulty_action, True)
 
+    def setup_mode_menu(self):
+        mode = self.view.menubar.mode
+
+        self.mode_map = {
+            Mode.NORMAL: mode.normal,
+            Mode.TIME: mode.time
+        }
+
+        for mode_, action in self.mode_map.items():
+            action.triggered.connect(partial(self.on_mode_changed, mode_))
+
+        self.selected_mode_action = self.mode_map.get(
+            self.model.mode)
+        self.set_action_checked(self.selected_mode_action, True)
+
     def on_locale_changed(self, locale: Locale):
         new = self.language_map.get(locale)
         old = self.selected_language_action
@@ -99,6 +115,14 @@ class AppController:
         self.switch_action(old, new)
         self.complete()
 
+    def on_mode_changed(self, mode: Mode):
+        new = self.mode_map.get(mode)
+        old = self.selected_mode_action
+        self.selected_mode_action = new
+        self.set_mode(mode)
+        self.switch_action(old, new)
+        self.complete()
+
     def switch_action(self, old: QAction, new: QAction):
         self.set_action_checked(old, False)
         self.set_action_checked(new, True)
@@ -111,6 +135,9 @@ class AppController:
 
     def set_level(self, lvl: Level):
         self.model.set_level(lvl)
+
+    def set_mode(self, mode: Mode):
+        self.model.set_mode(mode)
 
     def on_text_changed(self):
         if not self.timer.isActive():

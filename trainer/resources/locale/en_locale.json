@@ -17,11 +17,17 @@
       "medium": "Medium",
       "hard": "Difficult",
       "legendary": "Legendary"
+    },
+    "mode": {
+      "title": "Mode",
+      "normal": "Normal",
+      "time": "Time"
     }
   },
   "info_widget": {
     "speed": "Speed",
-    "mistakes": "Mistakes"
+    "mistakes": "Mistakes",
+    "time": "Time"
     },
   "user_dialog": {
     "title": "Change User",

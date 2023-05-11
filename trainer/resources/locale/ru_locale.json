@@ -17,11 +17,17 @@
       "medium": "Средне",
       "hard": "Сложно",
       "legendary": "Легендарно"
+    },
+    "mode": {
+      "title": "Режим",
+      "normal": "Обычный",
+      "time": "На время"
     }
   },
   "info_widget": {
     "speed": "Скорость",
-    "mistakes": "Ошибки"
+    "mistakes": "Ошибки",
+    "time": "Время"
   },
   "user_dialog": {
     "title": "Сменить пользователя",

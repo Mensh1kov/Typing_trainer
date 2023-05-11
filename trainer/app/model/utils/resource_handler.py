@@ -15,18 +15,17 @@ class Locale(Enum):
     EN = 'en'
 
 
+class Mode(Enum):
+    NORMAL = 'normal'
+    TIME = 'time'
+
+
 def load_data(path: str) -> dict:
     with open(path, encoding='utf-8') as f:
         return json.load(f)
 
 
-def load_sentence():
-    data = load_data('trainer/resources/texts/database.json')
-    return random.choice(data)
-
-
 def load_sentence_by_lvl(lvl: Level, locale: Locale) -> str:
-    print(locale)
     data = load_data(f'trainer/resources/texts/{locale.value}_levels.json')
     return random.choice(data.get(lvl.value))
 
