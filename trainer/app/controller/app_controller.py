@@ -14,7 +14,7 @@ class AppController:
         self.view = view
 
         self.setup_view()
-        self.setup_timer()
+        self.update_info_view()
         self.authorization()
 
     def close_event(self, event: QEvent):
@@ -25,11 +25,6 @@ class AppController:
         self.setup_window()
         self.setup_input_example_widget()
         self.setup_menubar()
-
-    def setup_timer(self):
-        self.time = 0
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.update_speed)
 
     def setup_window(self):
         self.view.main_window.closeEvent = self.close_event
@@ -142,15 +137,20 @@ class AppController:
     def on_text_changed(self):
         if not self.model.is_started:
             self.model.start()
+            self.update_info_view()
         input_ = self.view.input_example_widget.input
         if self.is_correct_input(input_.text()):
             input_.setStyleSheet("background-color: white;")
         else:
             input_.setStyleSheet("background-color: red;")
-            self.view.info_widget.set_mistakes(self.model.mistakes)
 
         if self.model.is_complete:
             self.complete()
+        else:
+            self.update_info_view()
+
+    def update_info_view(self):
+        self.update_mistakes()
         self.update_speed()
 
     def authorization(self):
@@ -165,6 +165,7 @@ class AppController:
         name, ok = self.get_user_input_dialog()
         if ok:
             self.change_user(name)
+            self.update_info_view()
 
     def change_user(self, name: str):
         self.model.change_user(name)
@@ -183,21 +184,19 @@ class AppController:
     def complete(self):
         self.set_new_example()
         self.clear_input()
-        self.reset_time()
-        self.stop_timer()
 
     def set_new_example(self):
         self.view.input_example_widget.example.setText(
             self.model.get_example_text())
 
     def clear_input(self):
-        self.view.input_example_widget.input.setText("")
-
-    def reset_time(self):
-        self.time = 0
-
-    def stop_timer(self):
-        self.timer.stop()
+        input = self.view.input_example_widget.input
+        input.blockSignals(True)
+        input.clear()
+        input.blockSignals(False)
 
     def update_speed(self):
         self.view.info_widget.set_speed(self.model.get_speed())
+
+    def update_mistakes(self):
+        self.view.info_widget.set_mistakes(self.model.get_mistakes())

@@ -19,12 +19,14 @@ class AppModel:
         self.mode = Mode.NORMAL
         self.locale = Locale.RU
 
+        self.total_session_len_input = 0
+        self.total_session_time_typing = .0
+        self.total_session_mistakes = 0
         self.target_text = self.get_example_text()
 
     def calculate_speed(self, len_input: int,
-                        time_delta: datetime.timedelta) -> int:
-        time = time_delta.total_seconds()
-        return int(len_input / (time / 60)) if time else 0
+                        time_delta: float) -> int:
+        return int(len_input / (time_delta / 60)) if time_delta else 0
 
     def process_input(self, input_text: str) -> bool:
         if self.mode == Mode.NORMAL:
@@ -52,6 +54,7 @@ class AppModel:
         self.save_user()
         if name:
             self.user = load_user_by_name(name)
+            self.reset_session()
 
     def is_complete(self):
         return self.is_complete
@@ -68,17 +71,40 @@ class AppModel:
     def get_speed(self):
         return self.speed
 
+    def get_mistakes(self):
+        return self.mistakes
+
     def save_user(self):
         if self.user:
             save_user(self.user)
 
+    def reset_session(self):
+        self.total_session_len_input = 0
+        self.total_session_time_typing = .0
+        self.mistakes = 0
+        self.speed = 0
+
+    def update_user_stat(self):
+        if self.user:
+            self.user['speed'] = self.calculate_speed(
+                self.total_session_len_input, self.total_session_time_typing)
+            self.user['mistakes'] = self.total_session_mistakes
+
     def _process_normal_input(self, input_text: str) -> bool:
         len_input = len(input_text)
-        self._update_speed(len_input)
+        delta_time = (datetime.datetime.now() -
+                      self.start_time).total_seconds()
+        self._update_speed(len_input, delta_time)
 
         if input_text == self.target_text:
             self.is_complete = True
             self.is_started = False
+            self.total_session_len_input += len_input
+            self.total_session_time_typing += delta_time
+            self.total_session_mistakes += self.mistakes
+            self.user['texts'] += 1
+            self.mistakes = 0
+            self.update_user_stat()
             return True
 
         if input_text != self.target_text[:len_input]:
@@ -88,6 +114,5 @@ class AppModel:
         self.is_complete = False
         return True
 
-    def _update_speed(self, len_input: int):
-        self.speed = self.calculate_speed(
-            len_input, datetime.datetime.now() - self.start_time)
+    def _update_speed(self, len_input: int, delta_time: float):
+        self.speed = self.calculate_speed(len_input, delta_time)
