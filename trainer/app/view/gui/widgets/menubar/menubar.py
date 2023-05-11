@@ -1,22 +1,21 @@
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QMenuBar
 from trainer.app.view.gui.widgets.menubar.difficulty import Difficulty
 from trainer.app.view.gui.widgets.menubar.language import Language
 from trainer.app.view.gui.widgets.menubar.user import User
 
 
-class MenuBar:
+class MenuBar(QMenuBar):
     def __init__(self, window: QMainWindow, locale: dict):
-        self.menubar = QtWidgets.QMenuBar(window)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
-        self.menubar.setObjectName("menubar")
+        super().__init__(window)
+        self.setGeometry(QtCore.QRect(0, 0, 800, 21))
 
-        self.user = User(self.menubar, locale.get('user'))
-        self.language = Language(self.menubar, locale.get('language'))
-        self.difficulty = Difficulty(self.menubar, locale.get('difficulty'))
+        self.user = User(self, locale.get('user'))
+        self.language = Language(self, locale.get('language'))
+        self.difficulty = Difficulty(self, locale.get('difficulty'))
 
         self.set_locale(locale)
-        window.setMenuBar(self.menubar)
+        window.setMenuBar(self)
 
     def set_locale(self, locale: dict):
         self.user.set_locale(locale.get('user'))

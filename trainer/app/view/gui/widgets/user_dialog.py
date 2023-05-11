@@ -1,9 +1,9 @@
 from PyQt5.QtWidgets import QInputDialog, QWidget
 
 
-class UserDialog:
+class UserDialog(QInputDialog):
     def __init__(self, widget: QWidget, locale: dict):
-        self.dialog = QInputDialog()
+        super().__init__(widget)
         self.widget = widget
         self.set_locale(locale)
 
@@ -12,4 +12,4 @@ class UserDialog:
         self.description = locale.get('description')
 
     def get_text(self) -> (str, bool):
-        return self.dialog.getText(self.widget, self.title, self.description)
+        return self.getText(self.widget, self.title, self.description)

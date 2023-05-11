@@ -1,9 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QMessageBox
 
 
-class StatDialog:
+class StatDialog(QMessageBox):
     def __init__(self, widget: QWidget, locale: dict):
-        self.dialog = QMessageBox(widget)
+        super().__init__(widget)
         self.locale = locale
         self.set_locale(locale)
 
@@ -11,12 +11,12 @@ class StatDialog:
         self.locale = locale
 
     def show_stat(self, user: dict):
-        self.dialog.setWindowTitle(
+        self.setWindowTitle(
             f'{self.locale.get("stat")}: {user.get("name")}')
-        self.dialog.setText(
+        self.setText(
             f"\n"
             f"{self.locale.get('number_typed_texts')}: {user.get('texts')}\n"
             f"{self.locale.get('speed')}: {user.get('speed')}\n"
             f"{self.locale.get('number_mistakes')}: {user.get('mistakes')}\n"
         )
-        self.dialog.show()
+        self.show()
