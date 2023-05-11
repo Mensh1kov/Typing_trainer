@@ -1,4 +1,7 @@
 import datetime
+import threading
+import time
+from typing import Callable
 
 from trainer.app.model.utils.data_handler import load_user_by_name, save_user
 from trainer.app.model.utils.resource_handler import Level, Locale, load_sentence_by_lvl, load_locale, Mode
@@ -13,6 +16,7 @@ class AppModel:
         self.time_delta = 0
         self.speed = 0
         self.user = None
+        self.timer = None
         self.start_time = datetime.datetime.now()
 
         self.lvl = Level.SIMPLE
@@ -23,6 +27,8 @@ class AppModel:
         self.total_session_time_typing = .0
         self.total_session_mistakes = 0
         self.target_text = self.get_example_text()
+        self.timer_action = None
+        self.time_up_action = None
 
     def calculate_speed(self, len_input: int,
                         time_delta: float) -> int:
@@ -33,8 +39,27 @@ class AppModel:
             return self._process_normal_input(input_text)
 
     def start(self):
-        self.start_time = datetime.datetime.now()
-        self.is_started = True
+        if self.mode == Mode.NORMAL:
+            self.start_time = datetime.datetime.now()
+        else:
+            self.start_timer(5)
+            self.is_started = True
+
+    def start_timer(self, seconds: int):
+        self.timer = threading.Timer(1.0, lambda: self.start_timer(seconds - 1))
+        self.timer.daemon = True
+        self.timer.start()
+        self.timer_action(seconds)
+
+        if seconds <= 0:
+            self.timer.cancel()
+            self.is_started = False
+            self.time_up_action()
+
+    def stop_timer(self):
+        self.is_started = False
+        if self.timer:
+            self.timer.cancel()
 
     def get_example_text(self):
         self.target_text = load_sentence_by_lvl(self.lvl, self.locale)
@@ -48,9 +73,17 @@ class AppModel:
         self.lvl = lvl
 
     def set_mode(self, mode: Mode):
+        self.stop_timer()
         self.mode = mode
 
+    def set_timer_action(self, action: Callable[[int], None]):
+        self.timer_action = action
+
+    def set_time_up_action(self, action: Callable[[], None]):
+        self.time_up_action = action
+
     def change_user(self, name: str):
+        self.stop_timer()
         self.save_user()
         if name:
             self.user = load_user_by_name(name)

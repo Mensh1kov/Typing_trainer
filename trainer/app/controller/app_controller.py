@@ -14,6 +14,7 @@ class AppController:
         self.view = view
 
         self.setup_view()
+        self.setup_model()
         self.update_info_view()
         self.authorization()
 
@@ -21,10 +22,21 @@ class AppController:
         self.model.save_user()
         event.accept()
 
+    def setup_model(self):
+        self.model.set_timer_action(self.update_time_view)
+        self.model.set_time_up_action(self.time_up)
+
     def setup_view(self):
         self.setup_window()
         self.setup_input_example_widget()
         self.setup_menubar()
+        self.setup_info_view()
+
+    def setup_info_view(self):
+        if self.model.mode == Mode.NORMAL:
+            self.view.info_widget.time.setVisible(False)
+        else:
+            self.view.info_widget.time.setVisible(True)
 
     def setup_window(self):
         self.view.main_window.closeEvent = self.close_event
@@ -117,6 +129,7 @@ class AppController:
         self.set_mode(mode)
         self.switch_action(old, new)
         self.complete()
+        self.setup_info_view()
 
     def switch_action(self, old: QAction, new: QAction):
         self.set_action_checked(old, False)
@@ -152,6 +165,12 @@ class AppController:
     def update_info_view(self):
         self.update_mistakes()
         self.update_speed()
+
+    def update_time_view(self, seconds: int):
+        self.view.info_widget.set_time(seconds)
+
+    def time_up(self):
+        print('time up!')
 
     def authorization(self):
         while not self.model.is_authorization():
