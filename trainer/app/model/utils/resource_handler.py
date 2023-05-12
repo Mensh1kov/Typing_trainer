@@ -30,5 +30,10 @@ def load_sentence_by_lvl(lvl: Level, locale: Locale) -> str:
     return random.choice(data.get(lvl.value))
 
 
+def load_big_text(locale: Locale) -> str:
+    data = load_data(f'trainer/resources/texts/{locale.value}_big_texts.json')
+    return random.choice(data)
+
+
 def load_locale(locale: Locale) -> dict:
     return load_data(f'trainer/resources/locale/{locale.value}_locale.json')
