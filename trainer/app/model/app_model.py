@@ -1,6 +1,5 @@
 import datetime
 import threading
-import time
 from typing import Callable
 
 from trainer.app.model.utils.data_handler import load_user_by_name, save_user
@@ -43,7 +42,7 @@ class AppModel:
             self.start_time = datetime.datetime.now()
         else:
             self.start_timer(5)
-            self.is_started = True
+        self.is_started = True
 
     def start_timer(self, seconds: int):
         self.timer = threading.Timer(1.0, lambda: self.start_timer(seconds - 1))
@@ -89,22 +88,22 @@ class AppModel:
             self.user = load_user_by_name(name)
             self.reset_session()
 
-    def is_complete(self):
+    def is_complete(self) -> bool:
         return self.is_complete
 
-    def is_authorization(self):
+    def is_authorization(self) -> bool:
         return self.user
 
-    def is_started(self):
+    def is_started(self) -> bool:
         return self.is_started
 
     def get_user(self) -> dict:
         return self.user
 
-    def get_speed(self):
+    def get_speed(self) -> int:
         return self.speed
 
-    def get_mistakes(self):
+    def get_mistakes(self) -> int:
         return self.mistakes
 
     def save_user(self):
