@@ -33,6 +33,11 @@
     "title": "Change User",
     "description": "Enter the user name"
   },
+  "time_up_dialog": {
+    "title": "Time up",
+    "speed": "Speed",
+    "mistakes": "Mistakes"
+  },
   "stat_dialog": {
     "stat": "Statistics",
     "number_typed_texts": "Number of typed texts",

@@ -170,7 +170,10 @@ class AppController:
         self.view.info_widget.set_time(seconds)
 
     def time_up(self):
-        print('time up!')
+        speed = self.model.get_speed()
+        mistakes = self.model.get_mistakes()
+        self.view.time_up_dialog.show_result(speed, mistakes)
+        self.complete()
 
     def authorization(self):
         while not self.model.is_authorization():

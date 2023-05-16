@@ -1,13 +1,20 @@
 import datetime
+import re
 import threading
 from typing import Callable
 
+from PyQt5.QtCore import QTimer
+
 from trainer.app.model.utils.data_handler import load_user_by_name, save_user
-from trainer.app.model.utils.resource_handler import Level, Locale, load_sentence_by_lvl, load_locale, Mode
+from trainer.app.model.utils.resource_handler import Level, Locale, \
+    load_sentence_by_lvl, load_locale, Mode, load_big_text
 
 
 class AppModel:
     def __init__(self):
+        self.time = 0
+        self.lines = []
+        self.total_len_input = 0
         self.is_complete = False
         self.is_started = False
 
@@ -36,32 +43,47 @@ class AppModel:
     def process_input(self, input_text: str) -> bool:
         if self.mode == Mode.NORMAL:
             return self._process_normal_input(input_text)
+        else:
+            return self._process_time_input(input_text)
 
     def start(self):
+        self.speed = 0
+        self.mistakes = 0
         if self.mode == Mode.NORMAL:
             self.start_time = datetime.datetime.now()
         else:
-            self.start_timer(5)
+            self.total_len_input = 0
+            self.start_timer(60)
         self.is_started = True
 
-    def start_timer(self, seconds: int):
-        self.timer = threading.Timer(1.0, lambda: self.start_timer(seconds - 1))
-        self.timer.daemon = True
-        self.timer.start()
-        self.timer_action(seconds)
-
-        if seconds <= 0:
-            self.timer.cancel()
-            self.is_started = False
+    def update_time(self):
+        self.time -= 1
+        self.timer_action(self.time)
+        if self.time <= 0:
+            self.stop_timer()
             self.time_up_action()
+
+    def start_timer(self, seconds: int):
+        self.time = seconds
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_time)
+        self.timer.start(1000)
 
     def stop_timer(self):
         self.is_started = False
         if self.timer:
-            self.timer.cancel()
+            self.timer.stop()
 
     def get_example_text(self):
-        self.target_text = load_sentence_by_lvl(self.lvl, self.locale)
+        if self.mode == Mode.NORMAL:
+            self.target_text = load_sentence_by_lvl(self.lvl, self.locale)
+        else:
+            if not self.is_started:
+                self.target_text = load_big_text(self.locale)
+                self.lines = re.split(
+                    r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s',
+                    self.target_text)
+
         return self.target_text
 
     def load_locale(self, locale: Locale):
@@ -135,7 +157,6 @@ class AppModel:
             self.total_session_time_typing += delta_time
             self.total_session_mistakes += self.mistakes
             self.user['texts'] += 1
-            self.mistakes = 0
             self.update_user_stat()
             return True
 
@@ -143,6 +164,38 @@ class AppModel:
             self.mistakes += 1
             self.is_complete = False
             return False
+        self.is_complete = False
+        return True
+
+    def _process_time_input(self, input_text: str) -> bool:
+        len_input = len(input_text)
+        delta_time = (datetime.datetime.now() -
+                      self.start_time).total_seconds()
+        self._update_speed(self.total_len_input + len_input, delta_time)
+
+        if input_text == self.lines[0]:
+            self.total_len_input += len_input
+            self.is_complete = True
+            self.total_session_len_input += len_input
+            self.total_session_time_typing += delta_time
+            self.total_session_mistakes += self.mistakes
+            self.update_user_stat()
+            line = self.lines.pop(0)
+            if len(self.lines) == 0:
+                self.target_text = load_big_text(self.locale)
+                self.lines = re.split(
+                    r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s',
+                    self.target_text)
+            else:
+                self.target_text = self.target_text[(len(line) + 1):]
+
+            return True
+
+        if input_text != self.target_text[:len_input]:
+            self.mistakes += 1
+            self.is_complete = False
+            return False
+
         self.is_complete = False
         return True
 
