@@ -2,7 +2,7 @@ import random
 import sys
 from functools import partial
 
-from PyQt5.QtCore import QTimer, QEvent, QUrl
+from PyQt5.QtCore import QEvent, QUrl
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent, QMediaPlaylist
 from PyQt5.QtWidgets import QAction
 from trainer.app.model.app_model import AppModel

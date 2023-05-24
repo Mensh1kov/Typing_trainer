@@ -17,9 +17,11 @@ class AppView:
         self.central_widget = QtWidgets.QWidget(main_window)
         self.user_dialog = UserDialog(main_window, locale.get('user_dialog'))
         self.stat_dialog = StatDialog(main_window, locale.get('stat_dialog'))
-        self.time_up_dialog = TimeUpDialog(main_window, locale.get('time_up_dialog'))
+        self.time_up_dialog = TimeUpDialog(main_window,
+                                           locale.get('time_up_dialog'))
         self.input_example_widget = InputExampleWidget(self.central_widget)
-        self.info_widget = InfoWidget(self.central_widget, locale.get('info_widget'))
+        self.info_widget = InfoWidget(self.central_widget,
+                                      locale.get('info_widget'))
         self.menubar = MenuBar(main_window, locale.get('menubar'))
 
         main_window.setCentralWidget(self.central_widget)

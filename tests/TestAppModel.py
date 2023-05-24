@@ -40,7 +40,7 @@ class TestAppModel(unittest.TestCase):
         input_text = "example input"
         result = self.model.process_input(input_text)
         self.assertFalse(result)
-        
+
     def test_start_normal_mode(self):
         self.model.mode = Mode.NORMAL
         self.model.start()
@@ -57,9 +57,22 @@ class TestAppModel(unittest.TestCase):
         self.assertEqual(self.model.total_len_input, 0)
         self.assertTrue(self.model.is_started)
 
-    def test_get_example_text(self):
-        self.assertTrue(self.model.get_example_text('trainer/resources/texts'))
+    def test_get_example_text_normal_mode(self):
+        self.model.mode = Mode.NORMAL
+        self.model.lvl = Level.MEDIUM
+        self.model.locale = Locale.EN
+        path = "C:/Users/rasba/Documents/Programming/Python/" \
+               "keyboard simulator/trainer/resources/texts"
+        result = self.model.get_example_text(path)
+        self.assertTrue(result)
 
+    def test_get_example_text_time_mode(self):
+        self.model.mode = Mode.TIME
+        self.model.locale = Locale.EN
+        path = "C:/Users/rasba/Documents/Programming/Python/" \
+               "keyboard simulator/trainer/resources/texts"
+        result = self.model.get_example_text(path)
+        self.assertTrue(result)
 
     def test_set_level(self):
         lvl = Level.HARD
@@ -69,7 +82,7 @@ class TestAppModel(unittest.TestCase):
     def test_set_mode(self):
         mode = Mode.NORMAL
         self.model.set_mode(mode)
-        self.assertEqual(self.model.mode, mode) 
+        self.assertEqual(self.model.mode, mode)
         self.assertFalse(self.model.is_started)
 
     def test_get_speed(self):
@@ -87,14 +100,21 @@ class TestAppModel(unittest.TestCase):
         self.assertEqual(self.model.get_mistakes(), mistakes)
 
     def test_reset_session(self):
-        self.model.total_session_len_input = 40
-        self.model.total_session_time_typing = 60
-        self.model.mistakes = 45
-        self.model.speed = 120
-
+        self.model.total_session_len_input = 100
+        self.model.total_session_time_typing = 10.0
+        self.model.mistakes = 5
+        self.model.speed = 50
         self.model.reset_session()
-
         self.assertEqual(self.model.total_session_len_input, 0)
-        self.assertEqual(self.model.total_session_time_typing, 0)
+        self.assertEqual(self.model.total_session_time_typing, .0)
         self.assertEqual(self.model.mistakes, 0)
         self.assertEqual(self.model.speed, 0)
+
+    def test_update_user_stat_with_user(self):
+        self.model.user = {'speed': 0, 'mistakes': 0}
+        self.model.total_session_len_input = 100
+        self.model.total_session_time_typing = 10.0
+        self.model.total_session_mistakes = 5
+        self.model.update_user_stat()
+        self.assertEqual(self.model.user['speed'], 600)
+        self.assertEqual(self.model.user['mistakes'], 5)

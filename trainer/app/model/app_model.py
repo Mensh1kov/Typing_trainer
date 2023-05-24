@@ -1,10 +1,7 @@
 import datetime
 import re
-import threading
 from typing import Callable
-
 from PyQt5.QtCore import QTimer
-
 from trainer.app.model.utils.data_handler import load_user_by_name, save_user
 from trainer.app.model.utils.resource_handler import Level, Locale, \
     load_sentence_by_lvl, load_locale, Mode, load_big_text
