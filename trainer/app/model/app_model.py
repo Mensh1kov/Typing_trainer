@@ -50,8 +50,10 @@ class AppModel:
     def start(self):
         self.speed = 0
         self.mistakes = 0
+        print(self.start_time)
+        self.start_time = datetime.datetime.now()
         if self.mode == Mode.NORMAL:
-            self.start_time = datetime.datetime.now()
+            pass
         else:
             self.total_len_input = 0
             self.start_timer(60)

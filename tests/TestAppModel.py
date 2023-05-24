@@ -1,6 +1,8 @@
+import os
 import unittest
 from trainer.app.model.app_model import AppModel
 from trainer.app.model.utils.resource_handler import Locale, Level, Mode
+from . import resource_folder
 
 
 class TestAppModel(unittest.TestCase):
@@ -61,17 +63,15 @@ class TestAppModel(unittest.TestCase):
         self.model.mode = Mode.NORMAL
         self.model.lvl = Level.MEDIUM
         self.model.locale = Locale.EN
-        path = "C:/Users/rasba/Documents/Programming/Python/" \
-               "keyboard simulator/trainer/resources/texts"
-        result = self.model.get_example_text(path)
+        result = self.model.get_example_text(os.path.join(resource_folder,
+                                                          'texts'))
         self.assertTrue(result)
 
     def test_get_example_text_time_mode(self):
         self.model.mode = Mode.TIME
         self.model.locale = Locale.EN
-        path = "C:/Users/rasba/Documents/Programming/Python/" \
-               "keyboard simulator/trainer/resources/texts"
-        result = self.model.get_example_text(path)
+        result = self.model.get_example_text(os.path.join(resource_folder,
+                                                          'texts'))
         self.assertTrue(result)
 
     def test_set_level(self):
