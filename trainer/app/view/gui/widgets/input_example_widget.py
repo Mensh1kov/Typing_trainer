@@ -8,14 +8,14 @@ class InputExampleWidget(QWidget):
         font = QtGui.QFont()
         font.setPointSize(12)
 
-        self.setGeometry(QtCore.QRect(50, 100, 700, 150))
+        self.setGeometry(QtCore.QRect(50, 100, 700, 330))
 
         self.input = QtWidgets.QLineEdit(self)
         self.input.setGeometry(QtCore.QRect(0, 0, 700, 30))
         self.input.setFont(font)
 
         self.example = QtWidgets.QLabel(self)
-        self.example.setGeometry(QtCore.QRect(3, 35, 694, 600))
+        self.example.setGeometry(QtCore.QRect(3, 35, 694, 300))
         self.example.setFont(font)
         self.example.setWordWrap(True)
         self.example.setAlignment(QtCore.Qt.AlignLeading |

@@ -1,7 +1,9 @@
+import random
 import sys
 from functools import partial
 
-from PyQt5.QtCore import QTimer, QEvent
+from PyQt5.QtCore import QTimer, QEvent, QUrl
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent, QMediaPlaylist
 from PyQt5.QtWidgets import QAction
 from trainer.app.model.app_model import AppModel
 from trainer.app.view.app_view import AppView
@@ -12,6 +14,7 @@ class AppController:
     def __init__(self, model: AppModel, view: AppView):
         self.model = model
         self.view = view
+        self.player = QMediaPlayer()
 
         self.setup_view()
         self.setup_model()
@@ -43,7 +46,7 @@ class AppController:
 
     def setup_input_example_widget(self):
         self.view.input_example_widget.example.setText(
-            self.model.get_example_text())
+            self.model.get_example_text('trainer/resources/texts'))
         self.view.input_example_widget.input.textChanged.connect(
             lambda: self.on_text_changed())
 
@@ -123,6 +126,7 @@ class AppController:
         self.complete()
 
     def on_mode_changed(self, mode: Mode):
+        self.player.stop()
         new = self.mode_map.get(mode)
         old = self.selected_mode_action
         self.selected_mode_action = new
@@ -149,6 +153,8 @@ class AppController:
 
     def on_text_changed(self):
         if not self.model.is_started:
+            if self.model.mode == Mode.TIME:
+                self.music_player()
             self.model.start()
             self.update_info_view()
         input_ = self.view.input_example_widget.input
@@ -170,6 +176,7 @@ class AppController:
         self.view.info_widget.set_time(seconds)
 
     def time_up(self):
+        self.player.stop()
         speed = self.model.get_speed()
         mistakes = self.model.get_mistakes()
         self.view.time_up_dialog.show_result(speed, mistakes)
@@ -209,7 +216,7 @@ class AppController:
 
     def set_new_example(self):
         self.view.input_example_widget.example.setText(
-            self.model.get_example_text())
+            self.model.get_example_text('trainer/resources/texts'))
 
     def clear_input(self):
         input = self.view.input_example_widget.input
@@ -222,3 +229,14 @@ class AppController:
 
     def update_mistakes(self):
         self.view.info_widget.set_mistakes(self.model.get_mistakes())
+
+    def music_player(self):
+        playlist = QMediaPlaylist(self.player)
+        music = random.choice(["1.mp3", "2.mp3", "3.mp3", "4.mp3", "5.mp3"])
+        media = QMediaContent(
+            QUrl.fromLocalFile(f'trainer/resources/music/{music}'))
+        playlist.addMedia(media)
+        playlist.setPlaybackMode(QMediaPlaylist.Loop)
+        self.player.setPlaylist(playlist)
+        self.player.play()
+

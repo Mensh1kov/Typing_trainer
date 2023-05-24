@@ -23,16 +23,20 @@ class AppModel:
         self.speed = 0
         self.user = None
         self.timer = None
+        self.texts_path = 'trainer/resources/texts'
+        self.locale_path = 'trainer/resources/locale'
         self.start_time = datetime.datetime.now()
+
+        self.total_session_len_input = 0
+        self.total_session_time_typing = .0
+        self.total_session_mistakes = 0
 
         self.lvl = Level.SIMPLE
         self.mode = Mode.NORMAL
         self.locale = Locale.RU
 
-        self.total_session_len_input = 0
-        self.total_session_time_typing = .0
-        self.total_session_mistakes = 0
-        self.target_text = self.get_example_text()
+    def set_up_parameters(self):
+        self.target_text = self.get_example_text(self.texts_path)
         self.timer_action = None
         self.time_up_action = None
 
@@ -43,7 +47,7 @@ class AppModel:
     def process_input(self, input_text: str) -> bool:
         if self.mode == Mode.NORMAL:
             return self._process_normal_input(input_text)
-        else:
+        elif self.mode == Mode.TIME:
             return self._process_time_input(input_text)
 
     def start(self):
@@ -74,12 +78,13 @@ class AppModel:
         if self.timer:
             self.timer.stop()
 
-    def get_example_text(self):
+    def get_example_text(self, path: str):
         if self.mode == Mode.NORMAL:
-            self.target_text = load_sentence_by_lvl(self.lvl, self.locale)
+            self.target_text = load_sentence_by_lvl(path,
+                                                    self.lvl, self.locale)
         else:
             if not self.is_started:
-                self.target_text = load_big_text(self.locale)
+                self.target_text = load_big_text(path, self.locale)
                 self.lines = re.split(
                     r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s',
                     self.target_text)
@@ -88,7 +93,7 @@ class AppModel:
 
     def load_locale(self, locale: Locale):
         self.locale = locale
-        return load_locale(locale)
+        return load_locale(self.locale_path, locale)
 
     def set_level(self, lvl: Level):
         self.lvl = lvl

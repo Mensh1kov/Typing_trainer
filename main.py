@@ -12,6 +12,7 @@ def main():
     main_window = QtWidgets.QMainWindow()
 
     model = AppModel()
+    model.set_up_parameters()
     view = AppView(main_window, model.load_locale(model.locale))
     AppController(model, view)
 

@@ -25,15 +25,15 @@ def load_data(path: str) -> dict:
         return json.load(f)
 
 
-def load_sentence_by_lvl(lvl: Level, locale: Locale) -> str:
-    data = load_data(f'trainer/resources/texts/{locale.value}_levels.json')
+def load_sentence_by_lvl(path: str,lvl: Level, locale: Locale) -> str:
+    data = load_data(f'{path}/{locale.value}_levels.json')
     return random.choice(data.get(lvl.value))
 
 
-def load_big_text(locale: Locale) -> str:
-    data = load_data(f'trainer/resources/texts/{locale.value}_big_texts.json')
+def load_big_text(path: str, locale: Locale) -> str:
+    data = load_data(f'{path}/{locale.value}_big_texts.json')
     return random.choice(data)
 
 
-def load_locale(locale: Locale) -> dict:
-    return load_data(f'trainer/resources/locale/{locale.value}_locale.json')
+def load_locale(path: str, locale: Locale) -> dict:
+    return load_data(f'{path}/{locale.value}_locale.json')
