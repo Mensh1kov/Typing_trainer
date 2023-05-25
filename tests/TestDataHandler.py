@@ -11,3 +11,7 @@ class TestDataHandler(unittest.TestCase):
         self.assertEqual(user['texts'], 0)
         self.assertEqual(user['speed'], 0)
         self.assertEqual(user['mistakes'], 0)
+
+
+if __name__ == '__main__':
+    unittest.main()

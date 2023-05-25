@@ -118,3 +118,7 @@ class TestAppModel(unittest.TestCase):
         self.model.update_user_stat()
         self.assertEqual(self.model.user['speed'], 600)
         self.assertEqual(self.model.user['mistakes'], 5)
+
+
+if __name__ == '__main__':
+    unittest.main()

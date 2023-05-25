@@ -20,3 +20,7 @@ class TestResourceHandler(unittest.TestCase):
         locale = load_locale(os.path.join(resource_folder, 'locale'),
                              Locale.RU)
         self.assertTrue(locale)
+
+
+if __name__ == '__main__':
+    unittest.main()
