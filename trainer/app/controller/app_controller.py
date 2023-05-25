@@ -239,4 +239,3 @@ class AppController:
         playlist.setPlaybackMode(QMediaPlaylist.Loop)
         self.player.setPlaylist(playlist)
         self.player.play()
-

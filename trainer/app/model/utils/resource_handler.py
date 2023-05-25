@@ -25,7 +25,7 @@ def load_data(path: str) -> dict:
         return json.load(f)
 
 
-def load_sentence_by_lvl(path: str,lvl: Level, locale: Locale) -> str:
+def load_sentence_by_lvl(path: str, lvl: Level, locale: Locale) -> str:
     data = load_data(f'{path}/{locale.value}_levels.json')
     return random.choice(data.get(lvl.value))
 

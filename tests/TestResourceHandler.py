@@ -13,8 +13,7 @@ class TestResourceHandler(unittest.TestCase):
         self.assertTrue(data)
 
     def test_load_big_text(self):
-        data = load_big_text(os.path.join(resource_folder, 'texts'),
-            Locale.RU)
+        data = load_big_text(os.path.join(resource_folder, 'texts'), Locale.RU)
         self.assertTrue(data)
 
     def test_load_locale(self):

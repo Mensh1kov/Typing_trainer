@@ -50,7 +50,6 @@ class AppModel:
     def start(self):
         self.speed = 0
         self.mistakes = 0
-        print(self.start_time)
         self.start_time = datetime.datetime.now()
         if self.mode == Mode.NORMAL:
             pass

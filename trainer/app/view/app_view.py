@@ -1,7 +1,8 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from trainer.app.view.gui.widgets.info_widget import InfoWidget
-from trainer.app.view.gui.widgets.input_example_widget import InputExampleWidget
+from trainer.app.view.gui.widgets.input_example_widget \
+    import InputExampleWidget
 from trainer.app.view.gui.widgets.menubar.menubar import MenuBar
 from trainer.app.view.gui.widgets.stat_dialog import StatDialog
 from trainer.app.view.gui.widgets.time_up_dialog import TimeUpDialog
